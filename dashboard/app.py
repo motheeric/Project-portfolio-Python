@@ -1,5 +1,3 @@
-# Dashboard Streamlit - Code Python pour Quant A
-
 import streamlit as st
 import requests
 import os
@@ -64,35 +62,44 @@ if df is not None and not df.empty:
     bh_return = (end_price / start_price - 1) * 100
     st.metric("Rendement Buy & Hold", f"{bh_return:.2f}%")
 
-   # --------------------------
-# STRATEGIE MOMENTUM MA10
-# --------------------------
-st.subheader("Stratégie Momentum (MA10)")
+    # --------------------------
+    # STRATEGIE SMA50 / SMA200
+    # --------------------------
+    st.subheader("Stratégie SMA50 / SMA200 (Golden Cross - Death Cross)")
 
-# Vérifier que la colonne Close existe
-if "Close" not in df.columns:
-    st.error("Les données Yahoo Finance ne contiennent pas de colonne 'Close'.")
-else:
-    # Calcul MA10
-    df["MA10"] = df["Close"].rolling(window=10).mean()
+    df["SMA50"] = df["Close"].rolling(window=50).mean()
+    df["SMA200"] = df["Close"].rolling(window=200).mean()
 
-    # Vérifier que MA10 est bien créée
-    if "MA10" not in df.columns:
-        st.error("Erreur : la colonne MA10 n'a pas pu être créée.")
+    df_sma = df.dropna().copy()
+
+    if df_sma.empty:
+        st.error("Pas assez de données pour SMA50/SMA200 (min 200 jours).")
     else:
-        # Filtrer les données valides
-        df_mom = df.dropna(subset=["MA10"]).copy()
+        # Signal : 1 = investis, 0 = hors marché
+        df_sma["Signal"] = (df_sma["SMA50"] > df_sma["SMA200"]).astype(int)
 
-        if df_mom.empty:
-            st.error("Pas assez de données pour calculer MA10 (min 10 jours).")
-        else:
-            # Calcul momentum
-            df_mom["Signal"] = (df_mom["Close"] > df_mom["MA10"]).astype(int)
-            df_mom["Return"] = df_mom["Close"].pct_change()
-            df_mom["Strategy_Return"] = df_mom["Return"] * df_mom["Signal"].shift(1)
+        # Rendements
+        df_sma["Return"] = df_sma["Close"].pct_change()
 
-            # Performance
-            mom_return = df_mom["Strategy_Return"].sum() * 100
+        # Stratégie (signal décalé de 1 jour)
+        df_sma["Strategy_Return"] = df_sma["Return"] * df_sma["Signal"].shift(1)
 
-            st.metric("Rendement Momentum MA10", f"{mom_return:.2f}%")
+        # Performance cumulée
+        df_sma["Cumulative"] = (1 + df_sma["Strategy_Return"]).cumprod()
 
+        # Performance finale
+        sma_return = (df_sma["Cumulative"].iloc[-1] - 1) * 100
+        st.metric("Rendement SMA50/SMA200", f"{sma_return:.2f}%")
+
+        # Graphique comparatif
+        st.subheader("Comparaison : Prix vs Stratégie SMA")
+
+        combined = pd.DataFrame({
+            "Prix normalisé": df_sma["Close"] / df_sma["Close"].iloc[0],
+            "Stratégie SMA50/SMA200": df_sma["Cumulative"]
+        })
+
+        st.line_chart(combined)
+
+else:
+    st.error("Erreur chargement des données Yahoo Finance.")
