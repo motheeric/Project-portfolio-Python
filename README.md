@@ -1,2 +1,8 @@
 # Project-portfolio-Python-QuantB
 Ce projet est un dashboard interactif pour la gestion d’un portefeuille multi-actifs. Il permet de calculer les principales métriques du portefeuille, de générer des rapports quotidiens et de visualiser les données en temps réel via Streamlit.
+La structure du projet est la suivante : dashboard.py contient le dashboard Streamlit pour visualiser la valeur cumulée, les prix des actifs, la corrélation et les KPIs. portfolio.py contient les fonctions pour calculer la valeur cumulée, les rendements, Sharpe, volatilité, max drawdown et la corrélation. datahandler.py récupère les données via yfinance et les met à jour automatiquement.
+daily_report.py génère un rapport CSV quotidien (daily_metrics.csv et daily_correlation.csv). cron_daily_report.sh permet d’exécuter automatiquement daily_report.py via cron tous les jours à 20 h.
+Les fonctionnalités principales mises en place sont les suivantes : mise à jour automatique toutes les 5 minutes dans le dashboard grâce à st_autorefresh, visualisation interactive des prix des actifs et de la valeur cumulée , possibilité de modifier les poids des actifs via des sliders avec recalcul automatique, génération d’un rapport quotidien automatique avec daily_report.p` et planification via cron, et fonctionnement continu sur une VM Linux.
+Pour utiliser le projet, il faut cloner le dépôt, créer et activer un environnement virtuel Linux avec python3 -m venv venv_linux et source venv_linux/bin/activate, installer les dépendances avec pip install -r requirements.txt, puis lancer le dashboard avec streamlit run dashboard.py.
+Les librairies principales utilisées sont : streamlit, pandas, numpy, plotly, yfinance et streamlit-autorefresh.
+
