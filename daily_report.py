@@ -1,5 +1,6 @@
 import data_handler as dh
 import portfolio as pf
+import pandas as pd
 
 df_prices = dh.get_initial_data(dh.symbols)
 weights = [0.1]*10
