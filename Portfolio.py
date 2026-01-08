@@ -4,7 +4,6 @@ import pandas as pd
 # Fonction pour calculer la valeur cumulée et les rendements
 def calc_portfolio(df_prices, weights):
     """
-    df_prices : DataFrame avec les prix ajustés des 10 actifs
     weights : array ou list des poids (doit sommer à 1)
     """
     # Calcul des rendements journaliers
