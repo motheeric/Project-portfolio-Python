@@ -1,14 +1,14 @@
 # Python Git Linux Project – Branch Quant A  
 
 
-### 👤 Author
+### Owner
 - Name: Léa NAPASEUTH
 - Branch: Quant A : Single Asset Analysis
 - Environment: Ubuntu (WSL) and Windows Powershell
 
 ---
 
-## 📌 Project Overview
+## Global overview
 
 This project consists of designing and deploying a professional quantitative finance application under Linux.  
 The application allows users to:
@@ -21,7 +21,7 @@ The project simulates a real-world quantitative finance workflow using Python, G
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies used
 
 - **Python 3**
 - **Streamlit** (for the interactive dashboard)
@@ -34,30 +34,30 @@ The project simulates a real-world quantitative finance workflow using Python, G
 
 ---
 
-## 📊 Main Features
+##  Main features
 
-### 🔹 Streamlit Dashboard
+### Streamlit Dashboard
 - Historical price visualization for Tesla (TSLA)
 - Real-time price display
 - Interactive sidebar (time period, strategy selection, parameter tuning)
 
-### 🔹 Implemented Quantitative Strategies
+### Implemented quantitative strategies
 - **Buy & Hold**
 - **Simple Moving Average (SMA) Strategy**
 - **Relative Strength Index (RSI) Strategy**
 
-### 🔹 Performance Metrics
+### Performance metrics
 - Cumulative return
 - Maximum drawdown
 - Sharpe ratio
 
-### 🔹 Bonus – Forecasting Model
+### Bonus : Forecasting Model
 - Linear regression model (scikit-learn)
 - Future price predictions with confidence intervals
 
 ---
 
-## 🐧 Linux Deployment
+## Linux deployment
 
 The application is executed under **Linux using Ubuntu via WSL**.
 
