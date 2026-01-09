@@ -64,7 +64,7 @@ The application is executed under **Linux using Ubuntu via WSL**.
 ### Running the application:
 ```bash
 source venv/bin/activate
-python3 -m streamlit run app1.py
+python3 -m streamlit run code.py
 Warning : be careful, running only streamlit does not work
 
 ### Link dashboard
