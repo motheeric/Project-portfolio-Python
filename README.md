@@ -66,3 +66,6 @@ The application is executed under **Linux using Ubuntu via WSL**.
 source venv/bin/activate
 python3 -m streamlit run app1.py
 Warning : be careful, running only streamlit does not work
+
+### Link dashboard
+http://localhost:8501
