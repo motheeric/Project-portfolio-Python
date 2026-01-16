@@ -1,8 +1,8 @@
 import streamlit as st
 import plotly.express as px
 import numpy as np
-import data_handler as dh
-import portfolio as pf
+from quant_b import data_handler as dh
+from quant_b import portfolio as pf
 import time 
 
 st.title("Dashboard Quant B - Multi-Asset Portfolio")
