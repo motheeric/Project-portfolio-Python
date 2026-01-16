@@ -21,17 +21,26 @@ symbols = [
 def get_initial_data(symbols, start="2023-01-01", end=None):
     if end is None:
         end = datetime.today().strftime("%Y-%m-%d")
+
     df_all = pd.DataFrame()
+
     for sym in symbols:
         try:
-            data = yf.download(sym, start=start, end=end)['Adj Close']
+            df = yf.download(sym, start=start, end=end)
 
-if not data.empty:
-    df_all[sym] = data
-    
+            # parfois 'Adj Close' n'est pas dispo, on fallback sur 'Close'
+            if "Adj Close" in df.columns:
+                data = df["Adj Close"]
+            else:
+                data = df["Close"]
+
+            if not data.empty:
+                df_all[sym] = data
+
         except Exception as e:
             print(f"Erreur pour {sym}: {e}")
-    df_all.index.name = 'Date'
+
+    df_all.index.name = "Date"
     return df_all
     
 # Fonction pour mettre à jour les données en continu
