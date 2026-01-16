@@ -21,14 +21,25 @@ def get_initial_data(symbols, start="2023-01-01", end=None):
     
 # Fonction pour mettre à jour les données en continu
 def update_data(df_prices, symbols):
-    last_date = df_prices.index[-1]
-    start = last_date + timedelta(days=1)
+
+    if df_prices.empty:
+        start = "2020-01-01"
+    else:
+        last_date = df_prices.index[-1]
+        start = last_date + timedelta(days=1)
+
     end = datetime.today()
-    if start >= end:
-        return df_prices  # rien à mettre à jour
-    # Récupérer les nouvelles données
-    new_data = get_initial_data(symbols, start=start.strftime("%Y-%m-%d"), end=end.strftime("%Y-%m-%d"))
-    # Concaténer avec les anciennes données et enlever les doublons
+
+    if not df_prices.empty and start >= end:
+        return df_prices
+
+    new_data = get_initial_data(
+        symbols,
+        start=start if isinstance(start, str) else start.strftime("%Y-%m-%d"),
+        end=end.strftime("%Y-%m-%d")
+    )
+
     df_prices = pd.concat([df_prices, new_data])
-    df_prices = df_prices[~df_prices.index.duplicated(keep='last')]
+    df_prices = df_prices[~df_prices.index.duplicated(keep="last")]
+
     return df_prices
