@@ -1,1 +1,0 @@
-Quant A files 
