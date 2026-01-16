@@ -3,6 +3,7 @@ import plotly.express as px
 import numpy as np
 import data_handler as dh
 import portfolio as pf
+from streamlit_autorefresh import st_autorefresh
 
 st.title("Dashboard Quant B - Multi-Asset Portfolio")
 
