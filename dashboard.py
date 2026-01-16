@@ -31,6 +31,9 @@ weights = weights / weights.sum()  # normaliser pour que la somme = 1
 
 # Calcul du portefeuille
 cumulative_value, port_returns = pf.calc_portfolio(df_prices, weights)
+if cumulative_value is None:
+    st.warning("Pas assez de données pour calculer le portefeuille.")
+    st.stop()
 metrics = pf.portfolio_metrics(cumulative_value, port_returns)
 corr = pf.correlation_matrix(df_prices)
 
