@@ -25,7 +25,10 @@ def get_initial_data(symbols, start="2023-01-01", end=None):
     for sym in symbols:
         try:
             data = yf.download(sym, start=start, end=end)['Adj Close']
-            df_all[sym] = data
+
+if not data.empty:
+    df_all[sym] = data
+    
         except Exception as e:
             print(f"Erreur pour {sym}: {e}")
     df_all.index.name = 'Date'
