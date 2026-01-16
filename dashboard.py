@@ -9,6 +9,9 @@ st.title("Dashboard Quant B - Multi-Asset Portfolio")
 
 # Charger les données initiales
 df_prices = dh.get_initial_data(dh.symbols)
+st.write("df_prices shape:", df_prices.shape)
+st.write("df_prices head:", df_prices.head())
+st.write("df_prices tail:", df_prices.tail())
 
 # Rafraîchissement toutes les 5 minutes
 st_autorefresh_interval = 300
