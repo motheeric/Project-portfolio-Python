@@ -3,7 +3,7 @@ import plotly.express as px
 import numpy as np
 import data_handler as dh
 import portfolio as pf
-from streamlit_autorefresh import st_autorefresh
+import time 
 
 st.title("Dashboard Quant B - Multi-Asset Portfolio")
 
@@ -11,7 +11,11 @@ st.title("Dashboard Quant B - Multi-Asset Portfolio")
 df_prices = dh.get_initial_data(dh.symbols)
 
 # Rafraîchissement toutes les 5 minutes
-st_autorefresh(interval=300000, key="refresh")
+st_autorefresh_interval = 300
+last_refresh = st.session_state.get("last_refresh", 0)
+if time.time() - last_refresh > st_autorefresh_interval:
+    st.session_state.last_refresh = time.time()
+    st.experimental_rerun()
 
 # Mise à jour des nouvelles données
 df_prices = dh.update_data(df_prices, dh.symbols)
