@@ -3,34 +3,33 @@ import pandas as pd
 
 # Fonction pour calculer la valeur cumulée et les rendements
 def calc_portfolio(df_prices, weights):
-    """
-    weights : array ou list des poids (doit sommer à 1)
-    """
-    # Calcul des rendements journaliers
-    returns = df_prices.pct_change().dropna()
-    
-    # Rendement du portefeuille
+    if df_prices is None or df_prices.empty or len(df_prices) < 2:
+        return None, None
+
+    returns = df_prices.pct_change()
+
+    if returns.dropna().empty:
+        return None, None
+
+    returns = returns.dropna()
+
     port_returns = returns.dot(weights)
-    
-    # Valeur cumulée du portefeuille
     cumulative_value = (1 + port_returns).cumprod()
-    
+
     return cumulative_value, port_returns
+
 
 # Fonction pour calculer les métriques principales
 def portfolio_metrics(cumulative_value, port_returns):
-    """
-    Renvoie un dictionnaire avec les métriques :
-    - Mean Return annualisé
-    - Volatilité annualisée
-    - Sharpe ratio
-    - Max drawdown
-    """
+
+    if cumulative_value is None or port_returns is None or port_returns.empty:
+        return None
+
     mean_ret = port_returns.mean() * 252
     vol = port_returns.std() * np.sqrt(252)
-    sharpe = mean_ret / vol
+    sharpe = mean_ret / vol if vol != 0 else np.nan
     max_dd = (cumulative_value.cummax() - cumulative_value).max()
-    
+
     return {
         "Mean Return": mean_ret,
         "Volatility": vol,
@@ -38,7 +37,15 @@ def portfolio_metrics(cumulative_value, port_returns):
         "Max Drawdown": max_dd
     }
 
+
 # Fonction pour calculer la corrélation entre les actifs
 def correlation_matrix(df_prices):
+    if df_prices is None or df_prices.empty or len(df_prices) < 2:
+        return None
+
     returns = df_prices.pct_change().dropna()
+
+    if returns.empty:
+        return None
+
     return returns.corr()
