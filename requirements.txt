@@ -1,11 +1,5 @@
-﻿# requirements Quant A
-
-Libraries used : 
-
 streamlit
 pandas
 numpy
-yfinance
 requests
-scikit-learn
 plotly
