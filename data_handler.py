@@ -3,7 +3,19 @@ import yfinance as yf
 from datetime import datetime, timedelta
 
 # Liste de tes 10 actifs
-symbols = ["AAPL","SP500","ENGI","US10Y","Bund10Y","XAUUSD","XAGUSD","EURUSD","BTCUSD","ETHUSD"]
+symbols = [
+    "AAPL",        
+    "^GSPC",       
+    "ENGI.PA",    
+    "^TNX",        
+    "^BUND",       
+    "GC=F",        
+    "SI=F",        
+    "EURUSD=X",    
+    "BTC-USD",     
+    "ETH-USD"      
+]
+
 
 # Fonction pour récupérer les données historiques
 def get_initial_data(symbols, start="2023-01-01", end=None):
