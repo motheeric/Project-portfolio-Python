@@ -15,7 +15,6 @@ st_autorefresh_interval = 300
 last_refresh = st.session_state.get("last_refresh", 0)
 if time.time() - last_refresh > st_autorefresh_interval:
     st.session_state.last_refresh = time.time()
-    # CORRECTION : Utilisation de st.rerun() au lieu de experimental_rerun()
     st.rerun() 
 
 # Mise à jour des nouvelles données
