@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-# Fonction pour calculer la valeur cumulée et les rendements
+# returns calculation
 def calc_portfolio(df_prices, weights):
     if df_prices is None or df_prices.empty or len(df_prices) < 2:
         return None, None
@@ -19,7 +19,7 @@ def calc_portfolio(df_prices, weights):
     return cumulative_value, port_returns
 
 
-# Fonction pour calculer les métriques principales
+# metrics
 def portfolio_metrics(cumulative_value, port_returns):
 
     if cumulative_value is None or port_returns is None or port_returns.empty:
@@ -38,7 +38,7 @@ def portfolio_metrics(cumulative_value, port_returns):
     }
 
 
-# Fonction pour calculer la corrélation entre les actifs
+# correlation
 def correlation_matrix(df_prices):
     if df_prices is None or df_prices.empty or len(df_prices) < 2:
         return None
