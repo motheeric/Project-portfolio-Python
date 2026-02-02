@@ -2,7 +2,7 @@ import pandas as pd
 import yfinance as yf
 from datetime import datetime, timedelta
 
-# Liste de tes 10 actifs
+
 symbols = [
     "AAPL",        
     "^GSPC",       
@@ -17,7 +17,6 @@ symbols = [
 ]
 
 
-# Fonction pour récupérer les données historiques
 def get_initial_data(symbols, start="2023-01-01", end=None):
     if end is None:
         end = datetime.today().strftime("%Y-%m-%d")
@@ -28,7 +27,6 @@ def get_initial_data(symbols, start="2023-01-01", end=None):
         try:
             df = yf.download(sym, start=start, end=end)
 
-            # parfois 'Adj Close' n'est pas dispo, on fallback sur 'Close'
             if "Adj Close" in df.columns:
                 data = df["Adj Close"]
             else:
@@ -43,7 +41,6 @@ def get_initial_data(symbols, start="2023-01-01", end=None):
     df_all.index.name = "Date"
     return df_all
     
-# Fonction pour mettre à jour les données en continu
 def update_data(df_prices, symbols):
 
     if df_prices.empty:
